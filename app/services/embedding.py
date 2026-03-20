@@ -1,10 +1,11 @@
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 
 from app.config import settings
 
-genai.configure(api_key=settings.google_api_key)
+client = genai.Client(api_key=settings.google_api_key)
 
-EMBEDDING_MODEL = "models/text-embedding-004"
+EMBEDDING_MODEL = "gemini-embedding-001"
 
 
 def generate_product_text(name: str, description: str, category: str) -> str:
@@ -29,21 +30,21 @@ def embed_texts(texts: list[str]) -> list[list[float]]:
 
     for i in range(0, len(texts), batch_size):
         batch = texts[i : i + batch_size]
-        result = genai.embed_content(
+        result = client.models.embed_content(
             model=EMBEDDING_MODEL,
-            content=batch,
-            task_type="RETRIEVAL_DOCUMENT",
+            contents=batch,
+            config=types.EmbedContentConfig(task_type="RETRIEVAL_DOCUMENT"),
         )
-        all_embeddings.extend(result["embedding"])
+        all_embeddings.extend([e.values for e in result.embeddings])
 
     return all_embeddings
 
 
 def embed_query(query: str) -> list[float]:
     """Generate an embedding for a search query."""
-    result = genai.embed_content(
+    result = client.models.embed_content(
         model=EMBEDDING_MODEL,
-        content=query,
-        task_type="RETRIEVAL_QUERY",
+        contents=query,
+        config=types.EmbedContentConfig(task_type="RETRIEVAL_QUERY"),
     )
-    return result["embedding"]
+    return result.embeddings[0].values

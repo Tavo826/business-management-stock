@@ -5,5 +5,7 @@ python -m venv .venv
 
 ### Dependencies
 
+pip install -r .\requiements.txt
 
+uvicorn app.main:app --reload
 

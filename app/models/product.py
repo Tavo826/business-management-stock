@@ -6,8 +6,8 @@ class Product(BaseModel):
     name: str
     price: float
     stock: float
-    description: str
     category: str
+    description: str
 
 
 class ProductSearchResult(BaseModel):
@@ -15,8 +15,8 @@ class ProductSearchResult(BaseModel):
     name: str
     price: float
     stock: float
-    description: str
     category: str
+    description: str
     relevance_score: float
 
 

@@ -12,6 +12,10 @@ uvicorn app.main:app --reload
 
 ## Deploy AWs EC2
 
+sudo docker stop $(sudo docker ps -aq) && sudo docker rm $(sudo docker ps -aq)
+sudo docker system prune -a --volumes -f
+sudo rm -rf business-management-core
+
 sudo yum update
 sudo yum install git -y
 sudo yum install docker -y

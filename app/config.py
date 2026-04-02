@@ -13,6 +13,7 @@ class Settings(BaseSettings):
 
     sync_cron_hour: int = 5
     sync_cron_minute: int = 0
+    scheduler_enabled: bool = True
 
     api_host: str = "0.0.0.0"
     api_port: int = 8000

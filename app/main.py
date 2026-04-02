@@ -44,26 +44,30 @@ async def startup():
         logger.info("No products found, running initial sync...")
         await scheduled_sync()
 
-    scheduler.add_job(
-        scheduled_sync,
-        "cron",
-        hour=settings.sync_cron_hour,
-        minute=settings.sync_cron_minute,
-        id="product_sync",
-        replace_existing=True,
-    )
-    scheduler.start()
-    logger.info(
-        "Scheduler started: sync at %02d:%02d daily",
-        settings.sync_cron_hour,
-        settings.sync_cron_minute,
-    )
+    if settings.scheduler_enabled:
+        scheduler.add_job(
+            scheduled_sync,
+            "cron",
+            hour=settings.sync_cron_hour,
+            minute=settings.sync_cron_minute,
+            id="product_sync",
+            replace_existing=True,
+        )
+        scheduler.start()
+        logger.info(
+            "Scheduler started: sync at %02d:%02d daily",
+            settings.sync_cron_hour,
+            settings.sync_cron_minute,
+        )
+    else:
+        logger.info("Scheduler is disabled")
 
 
 @app.on_event("shutdown")
 async def shutdown():
-    scheduler.shutdown(wait=False)
-    logger.info("Scheduler stopped")
+    if scheduler.running:
+        scheduler.shutdown(wait=False)
+        logger.info("Scheduler stopped")
 
 
 @app.get("/health")

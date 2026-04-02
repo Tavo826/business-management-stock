@@ -34,9 +34,6 @@ class OdooClient:
             response.raise_for_status()
             data = response.json()
 
-        #for record in data.get("data", []):
-        #    products.append(self._parse_product(record))
-
         for record in data:
             products.append(self._parse_product(record))
 

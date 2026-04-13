@@ -52,7 +52,7 @@ class OdooClient:
         return Product(
             id=record["id"],
             name=record.get("name", ""),
-            price=record.get("list_price", 0.0),
+            price=record.get("x_list_price_iva", 0.0),
             stock=record.get("qty_available", 0.0),
             category=category_name,
             description=description,

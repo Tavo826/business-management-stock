@@ -7,7 +7,7 @@ from app.models.product import Product
 
 logger = logging.getLogger(__name__)
 
-PRODUCT_FIELDS = ["id", "name", "list_price", "qty_available", "categ_id", "public_description"]
+PRODUCT_FIELDS = ["id", "name", "x_list_price_iva", "qty_available", "categ_id", "public_description"]
 
 
 class OdooClient:
@@ -24,7 +24,7 @@ class OdooClient:
         products = []
         async with httpx.AsyncClient(timeout=60) as client:
             response = await client.post(
-                f"{self.base_url}/json/2/product.product/search_read",
+                f"{self.base_url}/json/2/product.template/search_read",
                 headers=self.headers,
                 json={
                     "domain": [["sale_ok", "=", True]],

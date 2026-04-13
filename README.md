@@ -14,7 +14,8 @@ uvicorn app.main:app --reload
 
 sudo docker stop $(sudo docker ps -aq) && sudo docker rm $(sudo docker ps -aq)
 sudo docker system prune -a --volumes -f
-sudo rm -rf business-management-core
+sudo rm -rf business-management-stock
+sudo rm -rf rag-data
 
 sudo yum update
 sudo yum install git -y
@@ -29,10 +30,10 @@ git clone https://github.com/Tavo826/business-management-stock
 
 cd business-management-stock
 
-nano.env
+nano .env
 
 
 docker build -t rag-service .
 
-docker run -d --name rag-service --restart unless-stopped --env-file .env -p 8080:8080 -v /home/ec2-user/rag-data:/app/data rag-service
+docker run -d --name rag-service --restart unless-stopped --env-file .env -p 8000:8000 -v /home/ec2-user/rag-data:/app/data rag-service
 

@@ -7,3 +7,5 @@ build/
 data/chroma/
 .venv/
 venv/
+.claude
+CLAUDE.md

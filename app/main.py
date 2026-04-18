@@ -5,7 +5,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import FastAPI
 
 from app.api.dependencies import get_sync_service, get_vector_store
-from app.api.routes import search, sync
+from app.api.routes import search, stock, sync
 from app.config import settings
 
 logging.basicConfig(
@@ -22,6 +22,7 @@ app = FastAPI(
 
 app.include_router(search.router, prefix="/api", tags=["Search"])
 app.include_router(sync.router, prefix="/api", tags=["Sync"])
+app.include_router(stock.router, prefix="/api", tags=["Stock"])
 
 scheduler = AsyncIOScheduler()
 

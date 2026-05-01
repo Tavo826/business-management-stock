@@ -7,7 +7,7 @@ from app.models.product import Product
 
 logger = logging.getLogger(__name__)
 
-PRODUCT_FIELDS = ["id", "name", "x_list_price_iva", "qty_available", "categ_id", "public_description"]
+PRODUCT_FIELDS = ["id", "name", "list_price", "qty_available", "categ_id", "public_description"]
 
 
 class OdooClient:
@@ -174,7 +174,7 @@ class OdooClient:
         return Product(
             id=record["id"],
             name=record.get("name", ""),
-            price=record.get("x_list_price_iva", 0.0),
+            price=record.get("list_price", 0.0),
             stock=record.get("qty_available", 0.0),
             category=category_name,
             description=description,
